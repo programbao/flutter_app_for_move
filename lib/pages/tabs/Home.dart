@@ -5,11 +5,11 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import '../../services/ScreenAdaper.dart';
-import '../../model/RecommentMoveModel.dart';
+import '../../model/MovieModel.dart';
 import 'dart:convert';
 import '../../config/Config.dart';
 import 'package:dio/dio.dart';
-import '../../model/RecommentMoveModel.dart';
+import '../../model/MovieModel.dart';
 import '../../utils/CustomImage.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,48 +20,74 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List _recMoveList = [];
-  List _lastMoveList = [];
+  Map<String, List> movieLists = {
+    '_swiperMovieList': [],
+    '_recMovieList': [],
+    '_lastMovieList': [],
+    '_hotPlayMovieList': []
+  };
   final dio = Dio();
   @override
   void initState() {
     super.initState();
-    _getRecMoveData();
-    // _getLastMoveData();
+    _getSwiperMovieData();
+    _getRecMovieData();
+    _getLastMovieData();
+    _getHotPlayMovieData();
   }
 
-  // 异步请求接口数据
-  _getRecMoveData() async {
-    var result = await dio
-        .get('${Config.baseApi}/movie/page?current=1&size=10&recommended=true');
-    var recMoveData = RecommentMoveModel.fromJson(
-        (result.data['data']) as Map<String, dynamic>);
+  _setMovieList(result, setListName) {
+    var movieData =
+        MovieModel.fromJson((result.data['data']) as Map<String, dynamic>);
     setState(() {
-      _recMoveList = recMoveData.records ?? [];
+      movieLists[setListName] = movieData.records ?? [];
     });
   }
 
+  // 获取轮播电影数据
+  _getSwiperMovieData() async {
+    var result = await dio
+        .get('${Config.baseApi}/movie/page?current=1&size=4&carousel=true');
+    _setMovieList(result, '_swiperMovieList');
+  }
+
+  // 获取推荐电影
+  _getRecMovieData() async {
+    var result = await dio
+        .get('${Config.baseApi}/movie/page?current=1&size=10&recommended=true');
+    _setMovieList(result, '_recMovieList');
+  }
+
   // 获取最新电影
-  _getLastMoveData() async {
+  _getLastMovieData() async {
     var result =
-        await dio.get('${Config.baseApi}/movie/page?current=1&size=4&sort=1');
+        await dio.get('${Config.baseApi}/movie/page?current=1&size=5&sort=1');
+    _setMovieList(result, '_lastMovieList');
+  }
+
+  // 获取最新电影
+  _getHotPlayMovieData() async {
+    var result =
+        await dio.get('${Config.baseApi}/movie/page?current=1&size=5&sort=2');
+    _setMovieList(result, '_hotPlayMovieList');
   }
 
   // 轮播图
   Widget _swiperWidget() {
-    List<Map> imgList = [
-      {"url": 'https://via.placeholder.com/350x150'},
-      {"url": 'https://via.placeholder.com/350x150'},
-      {"url": 'https://via.placeholder.com/350x150'}
-    ];
+    List<Map> imgList = movieLists['_swiperMovieList']!.map((itemMovie) {
+      var diskName = itemMovie.disk.substring(0, 1);
+      var url = '${Config.resorceBaseUrl}/$diskName/${itemMovie.image}';
+      return {"url": url};
+    }).toList();
+    print(imgList);
     return Container(
       child: AspectRatio(
           aspectRatio: 2 / 1,
           child: Swiper(
             autoplay: true,
             itemBuilder: (BuildContext context, int index) {
-              return Image.network(
-                imgList[index]['url'],
+              return CustomImage(
+                url: imgList[index]['url'],
                 fit: BoxFit.fill,
               );
             },
@@ -80,12 +106,14 @@ class _HomePageState extends State<HomePage> {
           border: Border(left: BorderSide(color: Colors.red, width: 4))),
       child: Text(
         value,
-        style: TextStyle(color: Colors.black54),
+        style: const TextStyle(color: Colors.black54),
       ),
     );
   }
 
-  Widget _hotProductList() {
+  // 推荐商品
+  Widget _hotRecProductList() {
+    var recMovieList = movieLists['_recMovieList'];
     return Container(
       width: double.infinity,
       height: ScreenAdaper.height(240),
@@ -94,10 +122,11 @@ class _HomePageState extends State<HomePage> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           Widget widgetShow = const Text('加载中...');
-          print(_recMoveList.length);
-          if (_recMoveList.isNotEmpty) {
-            var currentMove = _recMoveList[index];
-            var pic = '${Config.resorceBaseUrl}/${currentMove.image}';
+          if (recMovieList.isNotEmpty) {
+            var currentMovie = recMovieList[index];
+            var diskName = currentMovie.disk.substring(0, 1);
+            var pic =
+                '${Config.resorceBaseUrl}/$diskName/${currentMovie.image}';
             widgetShow = Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -105,31 +134,32 @@ class _HomePageState extends State<HomePage> {
                   height: ScreenAdaper.height(140),
                   width: ScreenAdaper.width(140),
                   margin: EdgeInsets.only(right: ScreenAdaper.width(20)),
-                  child: CustomImage(url: pic, fit: BoxFit.cover),
+                  child: CustomImage(url: pic, fit: BoxFit.contain),
                 ),
                 Container(
                     padding: EdgeInsets.only(
                         top: ScreenAdaper.width(10),
                         right: ScreenAdaper.width(10)),
                     height: ScreenAdaper.height(44),
-                    // width: ScreenAdaper.width(300),
-                    child: Text(
-                      '第${index}条',
-                      textAlign: TextAlign.center,
-                    ))
+                    width: ScreenAdaper.width(140),
+                    child: Text(currentMovie.title.trim(),
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: ScreenAdaper.width(20))))
               ],
             );
           }
           return widgetShow;
         },
-        itemCount: _recMoveList.length,
+        itemCount: recMovieList!.length,
       ),
     );
   }
 
-  // 推荐商品
-  Widget _recProductListWidget() {
-    var itemWidth = (ScreenAdaper.getScreenWidth() - 30) / 2;
+  Widget _singleProductWidget(itemMovie) {
+    var itemWidth = (ScreenAdaper.getScreenWidth() - 35) / 2;
+    var diskName = itemMovie.disk.substring(0, 1);
+    var pic = '${Config.resorceBaseUrl}/$diskName/${itemMovie.image}';
     return Container(
       width: itemWidth,
       padding: EdgeInsets.all(ScreenAdaper.width(20)),
@@ -138,24 +168,24 @@ class _HomePageState extends State<HomePage> {
               Border.all(color: Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
       child: Column(
         children: [
-          Container(
+          SizedBox(
               width: double.infinity,
               // height: ScreenAdaper.height(200),
               child: AspectRatio(
                 // 防止服务器返回的的图片大小不一样，导致高度不一致
                 aspectRatio: 1 / 1,
-                child: Image.network(
-                  'https://via.placeholder.com/350x150',
+                child: CustomImage(
+                  url: pic,
                   fit: BoxFit.cover,
                 ),
               )),
           Padding(
             padding: EdgeInsets.only(top: ScreenAdaper.height(20)),
-            child: const Text(
-              'ajofejio金佛王金娥佛额温计文件饿哦副机位哦if就加我额飞机我饿附件金额和佛我发',
+            child: Text(
+              itemMovie.remark,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black54),
+              style: const TextStyle(color: Colors.black54),
             ),
           ),
           Padding(
@@ -185,6 +215,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ignore: non_constant_identifier_names
+  Widget _prodectListWidget(MovieList) {
+    return Container(
+      padding: EdgeInsets.all(ScreenAdaper.width(20)),
+      child: Wrap(
+        runSpacing: 10, // 垂直间距
+        spacing: 10, // 水平间距
+        children: MovieList!
+            .map<Widget>((itemMovie) => _singleProductWidget(itemMovie))
+            .toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenAdaper.init(context);
@@ -198,19 +242,17 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: ScreenAdaper.height(20),
         ),
-        _hotProductList(),
+        _hotRecProductList(),
+        SizedBox(
+          height: ScreenAdaper.height(20),
+        ),
+        _titleWidget('热播电影'),
+        _prodectListWidget(movieLists['_hotPlayMovieList']),
         SizedBox(
           height: ScreenAdaper.height(20),
         ),
         _titleWidget('最新电影'),
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Wrap(
-            runSpacing: 10, // 垂直间距
-            spacing: 10, // 水平间距
-            children: [_recProductListWidget()],
-          ),
-        )
+        _prodectListWidget(movieLists['_lastMovieList'])
       ],
     );
   }
