@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import '../../services/ScreenAdaper.dart';
 import '../../model/MovieModel.dart';
-import 'dart:convert';
 import '../../config/Config.dart';
-import 'package:dio/dio.dart';
-import '../../model/MovieModel.dart';
 import '../../utils/CustomImage.dart';
+import '../../api/ApiService.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     '_lastMovieList': [],
     '_hotPlayMovieList': []
   };
-  final dio = Dio();
+  final ApiService apiService = ApiService();
   @override
   void initState() {
     super.initState();
@@ -46,29 +44,29 @@ class _HomePageState extends State<HomePage> {
 
   // 获取轮播电影数据
   _getSwiperMovieData() async {
-    var result = await dio
+    var result = await apiService
         .get('${Config.baseApi}/movie/page?current=1&size=4&carousel=true');
     _setMovieList(result, '_swiperMovieList');
   }
 
   // 获取推荐电影
   _getRecMovieData() async {
-    var result = await dio
+    var result = await apiService
         .get('${Config.baseApi}/movie/page?current=1&size=10&recommended=true');
     _setMovieList(result, '_recMovieList');
   }
 
   // 获取最新电影
   _getLastMovieData() async {
-    var result =
-        await dio.get('${Config.baseApi}/movie/page?current=1&size=5&sort=1');
+    var result = await apiService
+        .get('${Config.baseApi}/movie/page?current=1&size=5&sort=1');
     _setMovieList(result, '_lastMovieList');
   }
 
   // 获取最新电影
   _getHotPlayMovieData() async {
-    var result =
-        await dio.get('${Config.baseApi}/movie/page?current=1&size=5&sort=2');
+    var result = await apiService
+        .get('${Config.baseApi}/movie/page?current=1&size=5&sort=2');
     _setMovieList(result, '_hotPlayMovieList');
   }
 

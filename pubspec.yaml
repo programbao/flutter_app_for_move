@@ -40,6 +40,7 @@ dependencies:
   # 屏幕适配比例
   flutter_screenutil: ^5.8.2
   dio: ^5.1.2
+  cached_network_image: ^3.2.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

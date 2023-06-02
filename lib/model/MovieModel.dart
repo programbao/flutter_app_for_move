@@ -45,6 +45,8 @@ class MovieModel {
     pages = json['pages'];
   }
 
+  get categoryId => null;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (records != null) {

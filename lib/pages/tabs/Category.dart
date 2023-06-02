@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import '../../services/ScreenAdaper.dart';
+import '../../utils/CustomImage.dart';
+import '../../api/ApiService.dart';
+import '../../config/Config.dart';
+import '../../model/MovieCategoryModel.dart';
+import '../../model/MovieModel.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -8,8 +14,162 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  int _selectIndex = 0;
+  final List _categoryList = [
+    MovieCategoryModel.fromJson(
+        {"id": '', "name": "全部类型", "movie": null, "tv": null})
+  ];
+  var _singleCategoryData = MovieModel();
+  final ApiService apiService = ApiService();
+  @override
+  void initState() {
+    super.initState();
+    _getCategoryList();
+  }
+
+  // 获取分类类型数据
+  Map<String, dynamic> categoryParams = {'movie': true};
+  _getCategoryList() async {
+    var result = await apiService.get(
+        '${Config.baseApi}/category/list/findByMovieOrTv',
+        queryParameters: categoryParams);
+    var categoryList = result.data['data'].map((item) {
+      return MovieCategoryModel.fromJson(item);
+    }).toList();
+    setState(() {
+      _categoryList.addAll(categoryList);
+    });
+    _getSingleCategoryData();
+  }
+
+  // 获取当个分类数据
+  _getSingleCategoryData({dynamic categoryId = ''}) async {
+    Map<String, dynamic> categoryParams = {
+      "movie": true,
+      "categoryId": categoryId,
+      "current": 1,
+      "size": 20
+    };
+    var result = await apiService.get('${Config.baseApi}/movie/page',
+        queryParameters: categoryParams);
+    var singleCategoryData = MovieModel.fromJson(result.data['data']);
+    setState(() {
+      _singleCategoryData = singleCategoryData;
+    });
+  }
+
+  _movieListWidget(records, rightItemWidth, rightItemHeight) {
+    Widget widgetPage = const Text(
+      '暂无数据',
+      textAlign: TextAlign.center,
+    );
+    if (records != null && records!.length > 0) {
+      widgetPage = Container(
+        height: double.infinity,
+        padding: const EdgeInsets.all(10),
+        color: const Color.fromRGBO(240, 246, 246, 0.9),
+        child: ListView.builder(
+          itemCount: (records.length / 3).ceil(),
+          itemBuilder: (context, index) {
+            var startIndex = index * 3;
+            var endIndex = startIndex + 3;
+            if (endIndex > records.length) {
+              endIndex = records.length;
+            }
+            var gridItems = records
+                .sublist(startIndex, endIndex)
+                .map<Widget>((currentMovie) {
+              var diskName = currentMovie.disk!.substring(0, 1);
+              var pic =
+                  '${Config.resorceBaseUrl}/$diskName/${currentMovie.image}';
+              return Container(
+                child: Column(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: CustomImage(url: pic, fit: BoxFit.cover),
+                    ),
+                    Container(
+                      height: ScreenAdaper.height(32),
+                      child: Text(
+                        currentMovie.title!.trim(),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList();
+            return GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 3,
+              childAspectRatio: rightItemWidth / rightItemHeight,
+              children: List<Widget>.from(gridItems),
+            );
+          },
+        ),
+      );
+    }
+    return Expanded(flex: 1, child: widgetPage);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text('我是分类组件');
+    ScreenAdaper.init(context);
+    // 计算右侧GridView比例宽高比
+    var leftWidth = ScreenAdaper.getScreenWidth() / 4;
+    // 右侧宽度 = 总宽度 - GridView外侧原生左右的padding值 - GridView中间的间距
+    var rightItemWidth =
+        (ScreenAdaper.getScreenWidth() - leftWidth - 20 - 20) / 3;
+    rightItemWidth = ScreenAdaper.width(rightItemWidth);
+    var rightItemHeight = rightItemWidth + ScreenAdaper.height(28);
+    // 分类电影数据
+    var records = _singleCategoryData.records;
+    return Row(
+      children: [
+        Container(
+            width: 140,
+            height: double.infinity, // 自适应高度
+            // color: Colors.red,
+            child: ListView.builder(
+                itemCount: _categoryList.length,
+                itemBuilder: (context, index) {
+                  var itemCategory = _categoryList[index];
+                  return Column(
+                    children: [
+                      InkWell(
+                        // 可以当作按钮组件
+                        onTap: () {
+                          setState(() {
+                            _selectIndex = index;
+                          });
+                          _getSingleCategoryData(categoryId: itemCategory.id);
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: ScreenAdaper.height(84),
+                          padding:
+                              EdgeInsets.only(top: ScreenAdaper.height(24)),
+                          color: _selectIndex == index
+                              ? const Color.fromRGBO(240, 246, 246, 0.9)
+                              : Colors.white,
+                          child: Text(
+                            itemCategory.name,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      const Divider(
+                        height: 1,
+                      )
+                    ],
+                  );
+                }) // 列表要动态生产 要用builder
+            ),
+        _movieListWidget(records, rightItemWidth, rightItemHeight)
+      ],
+    );
   }
 }
