@@ -13,19 +13,36 @@ class Tabs extends StatefulWidget {
 
 class _TabsState extends State<Tabs> {
   int _currentIndex = 1;
-  final List _pageList = [HomePage(), CategoryPage(), CartPage(), UserPage()];
+  late PageController _pageController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pageController = new PageController(initialPage: _currentIndex);
+  }
+
+  final List<Widget> _pageList = [
+    HomePage(),
+    CategoryPage(),
+    CartPage(),
+    UserPage()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('贝贝电影'),
       ),
-      body: _pageList[_currentIndex],
+      body: PageView(
+        controller: _pageController,
+        children: _pageList,
+      ),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
               _currentIndex = index;
+              _pageController.jumpToPage(_currentIndex);
             });
           },
           fixedColor: Colors.red,

@@ -47,6 +47,8 @@ class MovieModel {
 
   get categoryId => null;
 
+  get length => null;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (records != null) {
@@ -65,6 +67,8 @@ class MovieModel {
     data['pages'] = pages;
     return data;
   }
+
+  void addAll(MovieModel productList) {}
 }
 
 class Records {

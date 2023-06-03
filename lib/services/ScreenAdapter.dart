@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ScreenAdaper {
+class ScreenAdapter {
   static init(context) {
     ScreenUtil.init(context, designSize: const Size(750, 1334));
   }
@@ -21,5 +21,9 @@ class ScreenAdaper {
 
   static getScreenWidth() {
     return ScreenUtil().screenWidth;
+  }
+
+  static size(double value) {
+    ScreenUtil().setSp(value);
   }
 }

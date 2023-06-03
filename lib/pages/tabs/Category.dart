@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../services/ScreenAdaper.dart';
-import '../../utils/CustomImage.dart';
+import '../../services/ScreenAdapter.dart';
+import '../../widget/CustomImage.dart';
 import '../../api/ApiService.dart';
 import '../../config/Config.dart';
 import '../../model/MovieCategoryModel.dart';
@@ -13,7 +13,12 @@ class CategoryPage extends StatefulWidget {
   State<CategoryPage> createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
+class _CategoryPageState extends State<CategoryPage>
+    with AutomaticKeepAliveClientMixin {
+  // 保持页面状态
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   int _selectIndex = 0;
   final List _categoryList = [
     MovieCategoryModel.fromJson(
@@ -82,20 +87,27 @@ class _CategoryPageState extends State<CategoryPage> {
               var diskName = currentMovie.disk!.substring(0, 1);
               var pic =
                   '${Config.resorceBaseUrl}/$diskName/${currentMovie.image}';
-              return Container(
-                child: Column(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 1 / 1,
-                      child: CustomImage(url: pic, fit: BoxFit.cover),
-                    ),
-                    Container(
-                      height: ScreenAdaper.height(32),
-                      child: Text(
-                        currentMovie.title!.trim(),
+              return InkWell(
+                onTap: () {
+                  print(currentMovie);
+                  Navigator.pushNamed(context, '/productList',
+                      arguments: {"cid": currentMovie.categoryId});
+                },
+                child: Container(
+                  child: Column(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 1 / 1,
+                        child: CustomImage(url: pic, fit: BoxFit.cover),
                       ),
-                    ),
-                  ],
+                      Container(
+                        height: ScreenAdapter.height(32),
+                        child: Text(
+                          currentMovie.title!.trim(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }).toList();
@@ -117,14 +129,14 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenAdaper.init(context);
+    ScreenAdapter.init(context);
     // 计算右侧GridView比例宽高比
-    var leftWidth = ScreenAdaper.getScreenWidth() / 4;
+    var leftWidth = ScreenAdapter.getScreenWidth() / 4;
     // 右侧宽度 = 总宽度 - GridView外侧原生左右的padding值 - GridView中间的间距
     var rightItemWidth =
-        (ScreenAdaper.getScreenWidth() - leftWidth - 20 - 20) / 3;
-    rightItemWidth = ScreenAdaper.width(rightItemWidth);
-    var rightItemHeight = rightItemWidth + ScreenAdaper.height(28);
+        (ScreenAdapter.getScreenWidth() - leftWidth - 20 - 20) / 3;
+    rightItemWidth = ScreenAdapter.width(rightItemWidth);
+    var rightItemHeight = rightItemWidth + ScreenAdapter.height(28);
     // 分类电影数据
     var records = _singleCategoryData.records;
     return Row(
@@ -149,9 +161,9 @@ class _CategoryPageState extends State<CategoryPage> {
                         },
                         child: Container(
                           width: double.infinity,
-                          height: ScreenAdaper.height(84),
+                          height: ScreenAdapter.height(84),
                           padding:
-                              EdgeInsets.only(top: ScreenAdaper.height(24)),
+                              EdgeInsets.only(top: ScreenAdapter.height(24)),
                           color: _selectIndex == index
                               ? const Color.fromRGBO(240, 246, 246, 0.9)
                               : Colors.white,
