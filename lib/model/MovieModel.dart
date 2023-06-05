@@ -1,3 +1,4 @@
+// 接口数据模型转换： https://javiercbk.github.io/json_to_dart/
 class MovieModel {
   List<Records>? records;
   int? total;

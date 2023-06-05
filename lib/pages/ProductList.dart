@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../services/ScreenAdapter.dart';
 import '../widget/CustomImage.dart';
-import '../../api/ApiService.dart';
 import '../../config/Config.dart';
 import '../../model/MovieModel.dart';
 import '../widget/LoadingWidget.dart';
+import '../http/api/moveApi.dart';
 
 class ProductListPage extends StatefulWidget {
   final Map? arguments; // 声明为可空类型
@@ -17,7 +17,8 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ApiService apiService = ApiService();
+  final MovieApi movieApi = MovieApi();
+
   // 用于上拉分页
   ScrollController _scrollController = ScrollController();
   // 数据
@@ -63,9 +64,8 @@ class _ProductListPageState extends State<ProductListPage> {
     setState(() {
       flag = false;
     });
-    var result = await apiService.get('${Config.baseApi}/movie/page',
-        queryParameters: categoryParams);
-    var productData = MovieModel.fromJson(result.data['data']);
+    var result = await movieApi.getMovie(queryParameters: categoryParams);
+    var productData = MovieModel.fromJson(result['data']);
     var listData = productData.records ?? [];
     if (listData.length < pageSize) {
       setState(() {

@@ -3,31 +3,23 @@ import 'package:dio/dio.dart';
 class ApiService {
   static final ApiService _instance = ApiService._internal();
 
-  factory ApiService() {
+  factory ApiService({required String baseUrl}) {
+    _instance._dio.options = BaseOptions(
+      baseUrl: baseUrl,
+      connectTimeout: const Duration(milliseconds: 5000),
+      receiveTimeout: const Duration(milliseconds: 5000),
+    );
     return _instance;
   }
-  ApiService._internal()
-      : _dio = Dio(BaseOptions(
-          connectTimeout: const Duration(milliseconds: 5000), // 设置连接超时时间
-          receiveTimeout: const Duration(milliseconds: 5000), // 设置接收超时时间
-        ));
 
+  ApiService._internal() : _dio = Dio();
   final Dio _dio;
-  // ApiService() {
-  //   BaseOptions options = BaseOptions(
-  //     baseUrl: 'https://example.com/api', // 设置你的接口基础 URL
-  //     connectTimeout: 5000, // 设置连接超时时间
-  //     receiveTimeout: 5000, // 设置接收超时时间
-  //   );
-  //   _dio = Dio(options);
-  // }
-
-  Future<Response> get(String path,
+  Future<Map<String, dynamic>> get(String path,
       {Map<String, dynamic>? queryParameters}) async {
     try {
       Response response =
           await _dio.get(path, queryParameters: queryParameters);
-      return response;
+      return response.data;
     } catch (error) {
       throw handleError(error);
     }
@@ -36,7 +28,7 @@ class ApiService {
   Future<Response> post(String path, {Map<String, dynamic>? data}) async {
     try {
       Response response = await _dio.post(path, data: data);
-      return response;
+      return response.data;
     } catch (error) {
       throw handleError(error);
     }
@@ -45,7 +37,7 @@ class ApiService {
   Future<Response> put(String path, {Map<String, dynamic>? data}) async {
     try {
       Response response = await _dio.put(path, data: data);
-      return response;
+      return response.data;
     } catch (error) {
       throw handleError(error);
     }

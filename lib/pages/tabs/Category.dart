@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../services/ScreenAdapter.dart';
 import '../../widget/CustomImage.dart';
-import '../../api/ApiService.dart';
 import '../../config/Config.dart';
 import '../../model/MovieCategoryModel.dart';
 import '../../model/MovieModel.dart';
+import '../../http/api/categoryApi.dart';
+import '../../http/api/moveApi.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -25,7 +26,10 @@ class _CategoryPageState extends State<CategoryPage>
         {"id": '', "name": "全部类型", "movie": null, "tv": null})
   ];
   var _singleCategoryData = MovieModel();
-  final ApiService apiService = ApiService();
+  // final ApiService apiService = ApiService();
+  final CategoryApi categoryApi = CategoryApi();
+  final MovieApi movieApi = MovieApi();
+
   @override
   void initState() {
     super.initState();
@@ -35,10 +39,8 @@ class _CategoryPageState extends State<CategoryPage>
   // 获取分类类型数据
   Map<String, dynamic> categoryParams = {'movie': true};
   _getCategoryList() async {
-    var result = await apiService.get(
-        '${Config.baseApi}/category/list/findByMovieOrTv',
-        queryParameters: categoryParams);
-    var categoryList = result.data['data'].map((item) {
+    var result = await categoryApi.getCategory(queryParameters: categoryParams);
+    var categoryList = result['data'].map((item) {
       return MovieCategoryModel.fromJson(item);
     }).toList();
     setState(() {
@@ -55,9 +57,8 @@ class _CategoryPageState extends State<CategoryPage>
       "current": 1,
       "size": 20
     };
-    var result = await apiService.get('${Config.baseApi}/movie/page',
-        queryParameters: categoryParams);
-    var singleCategoryData = MovieModel.fromJson(result.data['data']);
+    var result = await movieApi.getMovie(queryParameters: categoryParams);
+    var singleCategoryData = MovieModel.fromJson(result['data']);
     setState(() {
       _singleCategoryData = singleCategoryData;
     });

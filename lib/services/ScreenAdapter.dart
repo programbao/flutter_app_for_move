@@ -24,6 +24,6 @@ class ScreenAdapter {
   }
 
   static size(double value) {
-    ScreenUtil().setSp(value);
+    return ScreenUtil().setSp(value);
   }
 }

@@ -8,7 +8,7 @@ import '../../services/ScreenAdapter.dart';
 import '../../model/MovieModel.dart';
 import '../../config/Config.dart';
 import '../../widget/CustomImage.dart';
-import '../../api/ApiService.dart';
+import '../../http/api/moveApi.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage>
     '_lastMovieList': [],
     '_hotPlayMovieList': []
   };
-  final ApiService apiService = ApiService();
+  // final ApiService apiService = ApiService();
+  final MovieApi movieApi = MovieApi();
   @override
   void initState() {
     super.initState();
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage>
 
   _setMovieList(result, setListName) {
     var movieData =
-        MovieModel.fromJson((result.data['data']) as Map<String, dynamic>);
+        MovieModel.fromJson((result['data']) as Map<String, dynamic>);
     setState(() {
       movieLists[setListName] = movieData.records ?? [];
     });
@@ -49,29 +50,34 @@ class _HomePageState extends State<HomePage>
 
   // 获取轮播电影数据
   _getSwiperMovieData() async {
-    var result = await apiService
-        .get('${Config.baseApi}/movie/page?current=1&size=4&carousel=true');
+    // Map<String, dynamic> queryParameters = {
+    //   "carousel": true,
+    //   "current": 1,
+    //   "size": 4
+    // };
+    var result = await movieApi
+        .getMovie(queryParameters: {"carousel": true, "current": 1, "size": 4});
     _setMovieList(result, '_swiperMovieList');
   }
 
   // 获取推荐电影
   _getRecMovieData() async {
-    var result = await apiService
-        .get('${Config.baseApi}/movie/page?current=1&size=10&recommended=true');
+    var result = await movieApi.getMovie(
+        queryParameters: {"recommended": true, "current": 1, "size": 4});
     _setMovieList(result, '_recMovieList');
   }
 
   // 获取最新电影
   _getLastMovieData() async {
-    var result = await apiService
-        .get('${Config.baseApi}/movie/page?current=1&size=5&sort=1');
+    var result = await movieApi
+        .getMovie(queryParameters: {"current": 1, "size": 5, "sort": 1});
     _setMovieList(result, '_lastMovieList');
   }
 
   // 获取最新电影
   _getHotPlayMovieData() async {
-    var result = await apiService
-        .get('${Config.baseApi}/movie/page?current=1&size=5&sort=2');
+    var result = await movieApi
+        .getMovie(queryParameters: {"current": 1, "size": 5, "sort": 2});
     _setMovieList(result, '_hotPlayMovieList');
   }
 
