@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/ScreenAdapter.dart';
+import '../../utils/ScreenAdapter.dart';
 import '../../widget/CustomImage.dart';
 import '../../config/Config.dart';
 import '../../model/MovieCategoryModel.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/ScreenAdapter.dart';
+import '../utils/ScreenAdapter.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

@@ -18,12 +18,18 @@ var onGenerateRoute = (RouteSettings settings) {
   if (pageContentBuilder != null) {
     if (settings.arguments != null) {
       final Route route = MaterialPageRoute(
-          builder: (context) =>
-              pageContentBuilder(context, arguments: settings.arguments));
+          builder: (context) => ScrollConfiguration(
+              behavior: const ScrollBehavior()
+                  .copyWith(overscroll: false), // 去除滚动出现的阴影
+              child:
+                  pageContentBuilder(context, arguments: settings.arguments)));
       return route;
     } else {
-      final Route route =
-          MaterialPageRoute(builder: (context) => pageContentBuilder(context));
+      final Route route = MaterialPageRoute(
+          builder: (context) => ScrollConfiguration(
+              behavior: const ScrollBehavior()
+                  .copyWith(overscroll: false), // 去除滚动出现的阴影
+              child: pageContentBuilder(context)));
       return route;
     }
   }

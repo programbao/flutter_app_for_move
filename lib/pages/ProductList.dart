@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/ScreenAdapter.dart';
+import '../utils/ScreenAdapter.dart';
 import '../widget/CustomImage.dart';
 import '../../config/Config.dart';
 import '../../model/MovieModel.dart';
@@ -201,7 +201,7 @@ class _ProductListPageState extends State<ProductListPage> {
         child: Container(
           height: ScreenAdapter.height(80),
           width: ScreenAdapter.width(750),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
                       width: 1, color: Color.fromRGBO(233, 233, 233, 0.9)))),
@@ -220,9 +220,11 @@ class _ProductListPageState extends State<ProductListPage> {
                             ScreenAdapter.height(16),
                             0,
                             ScreenAdapter.height(16)),
-                        child: Text(
+                        child: const Text(
                           "综合",
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(
+                            color: Color.fromRGBO(31, 117, 236, 1),
+                          ),
                           textAlign: TextAlign.center,
                         ))),
               ),
@@ -236,9 +238,10 @@ class _ProductListPageState extends State<ProductListPage> {
                               ScreenAdapter.height(16),
                               0,
                               ScreenAdapter.height(16)),
-                          child: Text(
+                          child: const Text(
                             "销量",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(
+                                color: Color.fromRGBO(31, 117, 236, 1)),
                             textAlign: TextAlign.center,
                           )))),
               Expanded(
@@ -251,9 +254,10 @@ class _ProductListPageState extends State<ProductListPage> {
                               ScreenAdapter.height(16),
                               0,
                               ScreenAdapter.height(16)),
-                          child: Text(
+                          child: const Text(
                             "价格",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(
+                                color: Color.fromRGBO(31, 117, 236, 1)),
                             textAlign: TextAlign.center,
                           )))),
               Expanded(
@@ -268,9 +272,10 @@ class _ProductListPageState extends State<ProductListPage> {
                               ScreenAdapter.height(16),
                               0,
                               ScreenAdapter.height(16)),
-                          child: Text(
+                          child: const Text(
                             "筛选",
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(
+                                color: Color.fromRGBO(31, 117, 236, 1)),
                             textAlign: TextAlign.center,
                           ))))
             ],

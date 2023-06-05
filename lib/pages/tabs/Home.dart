@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
-import '../../services/ScreenAdapter.dart';
+import '../../utils/ScreenAdapter.dart';
 import '../../model/MovieModel.dart';
 import '../../config/Config.dart';
 import '../../widget/CustomImage.dart';
@@ -88,7 +88,6 @@ class _HomePageState extends State<HomePage>
       var url = '${Config.resorceBaseUrl}/$diskName/${itemMovie.image}';
       return {"url": url};
     }).toList();
-    print(imgList);
     return Container(
       child: AspectRatio(
           aspectRatio: 2 / 1,
@@ -112,7 +111,9 @@ class _HomePageState extends State<HomePage>
       margin: EdgeInsets.only(left: ScreenAdapter.width(20)),
       padding: EdgeInsets.only(left: ScreenAdapter.width(10)),
       decoration: const BoxDecoration(
-          border: Border(left: BorderSide(color: Colors.red, width: 4))),
+          border: Border(
+              left: BorderSide(
+                  color: Color.fromRGBO(31, 117, 236, 1), width: 4))),
       child: Text(
         value,
         style: const TextStyle(color: Colors.black54),
@@ -173,8 +174,8 @@ class _HomePageState extends State<HomePage>
       width: itemWidth,
       padding: EdgeInsets.all(ScreenAdapter.width(20)),
       decoration: BoxDecoration(
-          border:
-              Border.all(color: Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
+          border: Border.all(
+              color: const Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
       child: Column(
         children: [
           SizedBox(
@@ -204,7 +205,8 @@ class _HomePageState extends State<HomePage>
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '￥132.00',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+                  style: TextStyle(
+                      color: Color.fromRGBO(31, 117, 236, 1), fontSize: 16),
                 ),
               ),
               Align(

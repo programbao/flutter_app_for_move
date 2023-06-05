@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
               colorScheme: const ColorScheme(
                   primary: Colors.white, //上方标题栏颜色
                   // primaryVariant: Colors.white,
-                  secondary: Colors.green,
+                  secondary: Color.fromRGBO(31, 117, 236, 0.5),
                   background: Colors.white,
                   error: Colors.red,
                   brightness: Brightness.light,
@@ -34,12 +34,12 @@ class _MyAppState extends State<MyApp> {
                   // secondaryVariant: Colors.white,
                   onError: Colors.yellow,
                   onPrimary: Colors.black, //字体颜色
-                  onSecondary: Colors.redAccent,
-                  onSurface: Colors.redAccent,
-                  surface: Colors.redAccent
+                  onSecondary: Color.fromRGBO(31, 117, 236, 0.8),
+                  onSurface: Color.fromRGBO(31, 117, 236, 0.5),
+                  surface: Color.fromRGBO(31, 117, 236, 0.5)
                   // all fields should have a value
                   )),
-          initialRoute: '/productList',
+          initialRoute: '/',
           onGenerateRoute: onGenerateRoute,
         ));
   }

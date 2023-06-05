@@ -3,7 +3,7 @@ import 'Cart.dart';
 import 'Home.dart';
 import 'User.dart';
 import 'Category.dart';
-import '../../services/ScreenAdapter.dart';
+import '../../utils/ScreenAdapter.dart';
 
 class Tabs extends StatefulWidget {
   const Tabs({super.key});
@@ -86,7 +86,7 @@ class _TabsState extends State<Tabs> {
               _pageController.jumpToPage(_currentIndex);
             });
           },
-          fixedColor: Colors.red,
+          fixedColor: const Color.fromRGBO(31, 117, 236, 1),
           type: BottomNavigationBarType.fixed,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ("首页")),
