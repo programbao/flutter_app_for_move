@@ -1,0 +1,7 @@
+# iconfont.yaml
+- icons:
+  - url: //at.alicdn.com/t/c/font_4104520_kfwfnhe601.css
+    icon_name: FlightBookingAPPIconfont
+    icon_class: FlightBookingAPPIconfont
+  font_assets_path: assets/iconfont/
+  icon_class_path: lib/icons/
