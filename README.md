@@ -2,11 +2,27 @@
 
 ##### 项目开发计划
 
-设计稿：https://lanhuapp.com/link/#/invite?sid=lX0lkxzL  
+设计稿：
+
++ （蓝湖）https://lanhuapp.com/link/#/invite?sid=lX0lkxzL  
++ （figma） https://www.figma.com/file/1OyXDJ3V3133B4LizcYJMJ/Flight-booking-app-for-kit?type=design&node-id=270%3A12943&t=9EOso6BVcy2SK7PM-1
++ (图标-导出svg-再上传到iconfont.cn) https://www.figma.com/file/iRL9gGAXTNLkxSabj8i40l/Arrived---Flight-Booking-App-Ui-Kits?type=design&node-id=10%3A739&t=9EOso6BVcy2SK7PM-1
 
 仓库：http://172.90.1.1/xiebaozhong/iwip-flight-booking-app（项目架构迟点搭建完成再发出来，并会把目录结构说明 写在README里面）；
 
 Iconfont：https://fonts.google.com/icons?selected=Material+Icons:open_in_new:&icon.platform=flutter（官网地址）
+
+阿里iconfont：https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=4104520 （需要邀请进去）
+
++ 
+
+运行下面命令
+
+```
+说明：命令行 dart .\iconfont-convert\main.dart --config iconfont.yaml
+```
+
+
 
 技术实现思路：
 

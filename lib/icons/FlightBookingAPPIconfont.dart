@@ -7,7 +7,41 @@ class FlightBookingAPPIconfont {
   static const String _family = 'FlightBookingAPPIconfont';
   
   FlightBookingAPPIconfont._();
-  
+    static const IconData home_fill = IconData(0xe606, fontFamily: _family); // home-fill
+  static const IconData home = IconData(0xe607, fontFamily: _family); // home
+  static const IconData ticket_fill = IconData(0xe608, fontFamily: _family); // ticket-fill
+  static const IconData ticket = IconData(0xe609, fontFamily: _family); // ticket
+  static const IconData profile_fill = IconData(0xe60a, fontFamily: _family); // profile-fill
+  static const IconData profile = IconData(0xe60b, fontFamily: _family); // profile
+  static const IconData customer_businessman_fill = IconData(0xe827, fontFamily: _family); // customer-businessman-fill
+  static const IconData customer_bussinessman = IconData(0xe828, fontFamily: _family); // customer-bussinessman
+  static const IconData home_two_fill = IconData(0xe857, fontFamily: _family); // home-fill
+  static const IconData home_two = IconData(0xe858, fontFamily: _family); // home
+  static const IconData discovery = IconData(0xe605, fontFamily: _family); // Discovery
+  static const IconData discovery_fill = IconData(0xe600, fontFamily: _family); // Discovery-fill
+  static const IconData flight_launch = IconData(0xe601, fontFamily: _family); // flight-launch
+  static const IconData sky_fly = IconData(0xe602, fontFamily: _family); // SkyFly
+  static const IconData paper_plane = IconData(0xe603, fontFamily: _family); // paper-plane
+  static const IconData vector = IconData(0xe604, fontFamily: _family); // Vector
   static const IconData bz_flight_o = IconData(0xe678, fontFamily: _family); // bz-flight-36-o
+  static const Map<String, IconData> icons = {
+      'home_fill': home_fill, // home-fill
+    'home': home, // home
+    'ticket_fill': ticket_fill, // ticket-fill
+    'ticket': ticket, // ticket
+    'profile_fill': profile_fill, // profile-fill
+    'profile': profile, // profile
+    'customer_businessman_fill': customer_businessman_fill, // customer-businessman-fill
+    'customer_bussinessman': customer_bussinessman, // customer-bussinessman
+    'home_two_fill': home_two_fill, // home-fill
+    'home_two': home_two, // home
+    'discovery': discovery, // Discovery
+    'discovery_fill': discovery_fill, // Discovery-fill
+    'flight_launch': flight_launch, // flight-launch
+    'sky_fly': sky_fly, // SkyFly
+    'paper_plane': paper_plane, // paper-plane
+    'vector': vector, // Vector
+    'bz_flight_o': bz_flight_o, // bz-flight-36-o
+  };
 }
 

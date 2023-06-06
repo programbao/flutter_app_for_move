@@ -4,8 +4,12 @@ import '../../src/utils.dart';
 class IconTemplate {
   static String build(String className, IconFontData data) {
     var itemContent = data.glyphs
-        .map((e) => _buildItem(e, data.fontPackage ?? ""))
+        .map((e) => _buildItemOne(e, data.fontPackage ?? ""))
         .join("\n");
+    var itemContentTwo = data.glyphs
+        .map((e) => _buildItemTwo(e, data.fontPackage ?? ""))
+        .join("\n");
+    final previewIconCon;
     final previewIconContent =
         data.glyphs.map((e) => _buildPreviewIcon(e, className)).join("\n");
 
@@ -24,8 +28,10 @@ class $className {
   static const String _family = '${data.fontFamily}';$fontPackageContent
   
   $className._();
-  
-$itemContent
+  $itemContent
+  static const Map<String, IconData> icons = {
+  $itemContentTwo
+  };
 }
 
 ''';
@@ -33,7 +39,7 @@ $itemContent
     return contents;
   }
 
-  static String _buildItem(IconFontGlyph glyphs, String fontPackage) {
+  static String _buildItemTwo(IconFontGlyph glyphs, String fontPackage) {
     String iconName = Utils.snake("${glyphs.fontClass}");
     String unicode = glyphs.unicode ?? "";
     String comment = "";
@@ -45,7 +51,21 @@ $itemContent
     if (fontPackage.isNotEmpty) {
       packageName = ", fontPackage: _package";
     }
+    return '''    '$iconName': $iconName,$comment''';
+  }
 
+  static String _buildItemOne(IconFontGlyph glyphs, String fontPackage) {
+    String iconName = Utils.snake("${glyphs.fontClass}");
+    String unicode = glyphs.unicode ?? "";
+    String comment = "";
+    String packageName = "";
+    if (glyphs.name != null && glyphs.name != "") {
+      comment = " // ${glyphs.name}";
+    }
+
+    if (fontPackage.isNotEmpty) {
+      packageName = ", fontPackage: _package";
+    }
     return '''  static const IconData $iconName = IconData(0x$unicode, fontFamily: _family$packageName);$comment''';
   }
 

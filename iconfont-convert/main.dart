@@ -17,11 +17,8 @@ void main(List<String> args) async {
   }
 
   try {
-    if (argResults['config']) {
-      await IconFontBuilder.buildFromYamlConfig(argResults['config']);
-    } else {
-      await Pub.save();
-    }
+    await IconFontBuilder.buildFromYamlConfig(argResults['config']);
+    await Pub.save();
   } catch (e, s) {
     print(e.toString());
     print(s.toString());

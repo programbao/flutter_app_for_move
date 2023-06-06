@@ -4,6 +4,7 @@ import 'Home.dart';
 import 'User.dart';
 import 'Category.dart';
 import '../../utils/ScreenAdapter.dart';
+import '../../icons/FlightBookingAPPIconfont.dart';
 
 class Tabs extends StatefulWidget {
   const Tabs({super.key});
@@ -15,6 +16,12 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   int _currentIndex = 1;
   late PageController _pageController;
+  List<String> barIconNamesList = [
+    'home',
+    'discovery',
+    'ticket',
+    'profile',
+  ];
   @override
   void initState() {
     // TODO: implement initState
@@ -35,7 +42,8 @@ class _TabsState extends State<Tabs> {
           ? AppBar(
               // toolbarHeight: 40,
               leading: const IconButton(
-                  onPressed: null, icon: Icon(Icons.center_focus_weak)),
+                  onPressed: null,
+                  icon: Icon(FlightBookingAPPIconfont.bz_flight_o)),
               title: InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/search');
@@ -88,12 +96,27 @@ class _TabsState extends State<Tabs> {
           },
           fixedColor: const Color.fromRGBO(31, 117, 236, 1),
           type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ("首页")),
-            BottomNavigationBarItem(icon: Icon(Icons.category), label: ("分类")),
+          items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart), label: ("购物车")),
-            BottomNavigationBarItem(icon: Icon(Icons.people), label: ("我的")),
+                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 0
+                    ? '${barIconNamesList[0]}_fill'
+                    : barIconNamesList[0]]),
+                label: ("Home")),
+            BottomNavigationBarItem(
+                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 1
+                    ? '${barIconNamesList[1]}_fill'
+                    : barIconNamesList[1]]),
+                label: ("Explore")),
+            BottomNavigationBarItem(
+                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 2
+                    ? '${barIconNamesList[2]}_fill'
+                    : barIconNamesList[2]]),
+                label: ("My Ticket")),
+            BottomNavigationBarItem(
+                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 3
+                    ? '${barIconNamesList[3]}_fill'
+                    : barIconNamesList[3]]),
+                label: ("My Profile")),
           ]),
     );
   }

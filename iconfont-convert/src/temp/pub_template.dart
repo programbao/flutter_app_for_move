@@ -26,7 +26,6 @@ class PubTemplate {
     List<String> iconfontPath,
   ) {
     _index = 0;
-
     // flutter:
     if (!pubJson.containsKey("flutter")) {
       lines.add("flutter:");
@@ -113,9 +112,9 @@ class PubTemplate {
   }
 
   static int _getLineIndex(List<String> lines, String reg, int indent) {
-    print('lines: $lines, _index: $_index');
-    int line = lines.sublist(_index).indexWhere((element) =>
-        RegExp("^${_getIndentString(reg, indent)}.*\$").hasMatch(element));
+    int line = lines.sublist(_index).indexWhere((element) {
+      return RegExp("^${_getIndentString(reg, indent)}.*").hasMatch(element);
+    });
 
     if (line == -1) {
       throw Exception("pubspec.yaml exception");
@@ -127,6 +126,7 @@ class PubTemplate {
 
   static String _getIndentString(String m, int x) {
     var sb = StringBuffer();
+    // print('object: m--$m, $x');
     for (var i = 0; i < x; i++) {
       sb.write("  ");
     }
