@@ -101,7 +101,7 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget _prodectListWidget() {
     if (_productList.isNotEmpty) {
       return Container(
-        margin: EdgeInsets.only(top: ScreenAdapter.height(80)),
+        margin: EdgeInsets.only(top: ScreenAdapter.height(40)),
         padding: EdgeInsets.all(10),
         child: ListView.builder(
             controller: _scrollController,
@@ -117,8 +117,8 @@ class _ProductListPageState extends State<ProductListPage> {
                   Row(
                     children: [
                       Container(
-                        width: ScreenAdapter.width(180),
-                        height: ScreenAdapter.height(180),
+                        width: ScreenAdapter.width(90),
+                        height: ScreenAdapter.height(90),
                         child: CustomImage(
                           url: pic,
                           fit: BoxFit.cover,
@@ -127,7 +127,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       Expanded(
                           flex: 1,
                           child: Container(
-                            height: ScreenAdapter.height(180),
+                            height: ScreenAdapter.height(90),
                             margin: const EdgeInsets.only(left: 10),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +141,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                 Row(
                                   children: [
                                     Container(
-                                      height: ScreenAdapter.height(36),
+                                      height: ScreenAdapter.height(18),
                                       margin: EdgeInsets.only(right: 10),
                                       padding:
                                           EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -154,7 +154,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                       child: Text("4g"),
                                     ),
                                     Container(
-                                      height: ScreenAdapter.height(36),
+                                      height: ScreenAdapter.height(18),
                                       margin: EdgeInsets.only(right: 10),
                                       padding:
                                           EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -196,11 +196,11 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget _subHeaderWidget() {
     return Positioned(
         top: 0,
-        height: ScreenAdapter.height(80),
-        width: ScreenAdapter.width(750),
+        height: ScreenAdapter.height(40),
+        width: ScreenAdapter.width(375),
         child: Container(
-          height: ScreenAdapter.height(80),
-          width: ScreenAdapter.width(750),
+          height: ScreenAdapter.height(40),
+          width: ScreenAdapter.width(375),
           decoration: const BoxDecoration(
               border: Border(
                   bottom: BorderSide(
@@ -215,11 +215,8 @@ class _ProductListPageState extends State<ProductListPage> {
                       _scrollController.jumpTo(0);
                     },
                     child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0,
-                            ScreenAdapter.height(16),
-                            0,
-                            ScreenAdapter.height(16)),
+                        padding: EdgeInsets.fromLTRB(0, ScreenAdapter.height(8),
+                            0, ScreenAdapter.height(8)),
                         child: const Text(
                           "综合",
                           style: TextStyle(
@@ -235,9 +232,9 @@ class _ProductListPageState extends State<ProductListPage> {
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(
                               0,
-                              ScreenAdapter.height(16),
+                              ScreenAdapter.height(8),
                               0,
-                              ScreenAdapter.height(16)),
+                              ScreenAdapter.height(8)),
                           child: const Text(
                             "销量",
                             style: TextStyle(
@@ -251,9 +248,9 @@ class _ProductListPageState extends State<ProductListPage> {
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(
                               0,
-                              ScreenAdapter.height(16),
+                              ScreenAdapter.height(8),
                               0,
-                              ScreenAdapter.height(16)),
+                              ScreenAdapter.height(8)),
                           child: const Text(
                             "价格",
                             style: TextStyle(
@@ -269,9 +266,9 @@ class _ProductListPageState extends State<ProductListPage> {
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(
                               0,
-                              ScreenAdapter.height(16),
+                              ScreenAdapter.height(8),
                               0,
-                              ScreenAdapter.height(16)),
+                              ScreenAdapter.height(8)),
                           child: const Text(
                             "筛选",
                             style: TextStyle(

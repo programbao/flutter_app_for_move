@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // 比例适配
 class ScreenAdapter {
   static init(context) {
-    ScreenUtil.init(context, designSize: const Size(750, 1334));
+    ScreenUtil.init(context, designSize: const Size(375, 812));
   }
 
   static height(double value) {

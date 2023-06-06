@@ -14,9 +14,13 @@ Iconfont：https://fonts.google.com/icons?selected=Material+Icons:open_in_new:&i
 
 阿里iconfont：https://www.iconfont.cn/manage/index?manage_type=myprojects&projectId=4104520 （需要邀请进去）
 
-+ 
++ ![iconfont引入说明](./readme-files/iconfont引入说明.png)
 
-运行下面命令
++ 更改iconfont.yaml里面的连接
+
+  ![iconfont更改链接](./readme-files/iconfont更改链接.png)
+
++ 运行下面命令 - 生成最新icon
 
 ```
 说明：命令行 dart .\iconfont-convert\main.dart --config iconfont.yaml
@@ -42,6 +46,7 @@ Iconfont：https://fonts.google.com/icons?selected=Material+Icons:open_in_new:&i
 ├── http
 │   └── request.dart # 请求接口封装
 │   └── api # 接口api文件目录
+├── icons 自定义iconfont图标
 ├── model # 数据模型 用于转换接口数据 用于方便视图调用（可以不转）
 ├── pages
 │   ├── tabs tabbar底部切换页面
@@ -54,9 +59,15 @@ Iconfont：https://fonts.google.com/icons?selected=Material+Icons:open_in_new:&i
 └── utils # 公共方法类
 │   └── ScreenAdapter.dart # 比例适配方法
 │   └── ScreenAdapter.dart # 比例适配方法
+└── widget # 公共组件
+│   └── CustomImage.dart # 自定义图片组件
+│   └── LoadingWidget.dart # 加载中显示组件
+
+./cionfont-convert # iconfont转换flutter能够用的方式
+./assets # 静态资源目录
 ```
 
-
+说明：缺了一个国际化；迟点补上去
 
 
 

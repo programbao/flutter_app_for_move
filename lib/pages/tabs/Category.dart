@@ -102,9 +102,12 @@ class _CategoryPageState extends State<CategoryPage>
                         child: CustomImage(url: pic, fit: BoxFit.cover),
                       ),
                       Container(
-                        height: ScreenAdapter.height(32),
+                        height: ScreenAdapter.height(24),
                         child: Text(
                           currentMovie.title!.trim(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: ScreenAdapter.size(12)),
                         ),
                       ),
                     ],
@@ -135,7 +138,7 @@ class _CategoryPageState extends State<CategoryPage>
     var leftWidth = ScreenAdapter.getScreenWidth() / 4;
     // 右侧宽度 = 总宽度 - GridView外侧原生左右的padding值 - GridView中间的间距
     var rightItemWidth =
-        (ScreenAdapter.getScreenWidth() - leftWidth - 20 - 20) / 3;
+        (ScreenAdapter.getScreenWidth() - leftWidth - 30 - 30) / 3;
     rightItemWidth = ScreenAdapter.width(rightItemWidth);
     var rightItemHeight = rightItemWidth + ScreenAdapter.height(28);
     // 分类电影数据
@@ -162,9 +165,9 @@ class _CategoryPageState extends State<CategoryPage>
                         },
                         child: Container(
                           width: double.infinity,
-                          height: ScreenAdapter.height(84),
+                          height: ScreenAdapter.height(42),
                           padding:
-                              EdgeInsets.only(top: ScreenAdapter.height(24)),
+                              EdgeInsets.only(top: ScreenAdapter.height(12)),
                           color: _selectIndex == index
                               ? const Color.fromRGBO(240, 246, 246, 0.9)
                               : Colors.white,

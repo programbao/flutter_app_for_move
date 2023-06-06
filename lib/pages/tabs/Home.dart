@@ -107,9 +107,9 @@ class _HomePageState extends State<HomePage>
 
   Widget _titleWidget(value) {
     return Container(
-      height: ScreenAdapter.height(32),
-      margin: EdgeInsets.only(left: ScreenAdapter.width(20)),
-      padding: EdgeInsets.only(left: ScreenAdapter.width(10)),
+      height: ScreenAdapter.height(20),
+      margin: EdgeInsets.only(left: ScreenAdapter.width(10)),
+      padding: EdgeInsets.only(left: ScreenAdapter.width(5)),
       decoration: const BoxDecoration(
           border: Border(
               left: BorderSide(
@@ -126,8 +126,8 @@ class _HomePageState extends State<HomePage>
     var recMovieList = movieLists['_recMovieList'];
     return Container(
       width: double.infinity,
-      height: ScreenAdapter.height(240),
-      padding: EdgeInsets.all(ScreenAdapter.width(20)),
+      height: ScreenAdapter.height(100),
+      padding: EdgeInsets.all(ScreenAdapter.width(0)),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -141,21 +141,21 @@ class _HomePageState extends State<HomePage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: ScreenAdapter.height(140),
-                  width: ScreenAdapter.width(140),
-                  margin: EdgeInsets.only(right: ScreenAdapter.width(20)),
+                  height: ScreenAdapter.height(70),
+                  width: ScreenAdapter.width(70),
+                  margin: EdgeInsets.only(right: ScreenAdapter.width(10)),
                   child: CustomImage(url: pic, fit: BoxFit.contain),
                 ),
                 Container(
                     padding: EdgeInsets.only(
-                        top: ScreenAdapter.width(10),
-                        right: ScreenAdapter.width(10)),
-                    height: ScreenAdapter.height(44),
-                    width: ScreenAdapter.width(140),
+                        top: ScreenAdapter.width(5),
+                        right: ScreenAdapter.width(5)),
+                    height: ScreenAdapter.height(22),
+                    width: ScreenAdapter.width(70),
                     child: Text(currentMovie.title.trim(),
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: ScreenAdapter.width(20))))
+                        style: TextStyle(fontSize: ScreenAdapter.width(10))))
               ],
             );
           }
@@ -167,12 +167,12 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget _singleProductWidget(itemMovie) {
-    var itemWidth = (ScreenAdapter.getScreenWidth() - 35) / 2;
+    var itemWidth = (ScreenAdapter.getScreenWidth() - 31) / 2;
     var diskName = itemMovie.disk.substring(0, 1);
     var pic = '${Config.resorceBaseUrl}/$diskName/${itemMovie.image}';
     return Container(
       width: itemWidth,
-      padding: EdgeInsets.all(ScreenAdapter.width(20)),
+      padding: EdgeInsets.all(ScreenAdapter.width(10)),
       decoration: BoxDecoration(
           border: Border.all(
               color: const Color.fromRGBO(233, 233, 233, 0.9), width: 1)),
@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage>
                 ),
               )),
           Padding(
-            padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
+            padding: EdgeInsets.only(top: ScreenAdapter.height(10)),
             child: Text(
               itemMovie.remark,
               maxLines: 2,
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: ScreenAdapter.height(20)),
+            padding: EdgeInsets.only(top: ScreenAdapter.height(10)),
             child: const Stack(children: [
               Align(
                 alignment: Alignment.centerLeft,
@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage>
   // ignore: non_constant_identifier_names
   Widget _prodectListWidget(MovieList) {
     return Container(
-      padding: EdgeInsets.all(ScreenAdapter.width(20)),
+      padding: EdgeInsets.all(ScreenAdapter.width(10)),
       child: Wrap(
         runSpacing: 10, // 垂直间距
         spacing: 10, // 水平间距
@@ -247,20 +247,20 @@ class _HomePageState extends State<HomePage>
       children: <Widget>[
         _swiperWidget(),
         SizedBox(
-          height: ScreenAdapter.height(20),
+          height: ScreenAdapter.height(8),
         ),
         _titleWidget('热门推荐'),
         SizedBox(
-          height: ScreenAdapter.height(20),
+          height: ScreenAdapter.height(8),
         ),
         _hotRecProductList(),
         SizedBox(
-          height: ScreenAdapter.height(20),
+          height: ScreenAdapter.height(8),
         ),
         _titleWidget('热播电影'),
         _prodectListWidget(movieLists['_hotPlayMovieList']),
         SizedBox(
-          height: ScreenAdapter.height(20),
+          height: ScreenAdapter.height(8),
         ),
         _titleWidget('最新电影'),
         _prodectListWidget(movieLists['_lastMovieList'])

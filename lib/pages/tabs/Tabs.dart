@@ -49,7 +49,7 @@ class _TabsState extends State<Tabs> {
                   Navigator.pushNamed(context, '/search');
                 },
                 child: Container(
-                  height: ScreenAdapter.height(60),
+                  height: ScreenAdapter.height(30),
                   padding: EdgeInsets.only(left: 10),
                   decoration: BoxDecoration(
                       color: Color.fromRGBO(233, 233, 233, 0.8),
@@ -58,7 +58,7 @@ class _TabsState extends State<Tabs> {
                     children: [
                       const Icon(Icons.search),
                       Text('笔记本',
-                          style: TextStyle(fontSize: ScreenAdapter.size(28)))
+                          style: TextStyle(fontSize: ScreenAdapter.size(14)))
                     ],
                   ),
                 ),
@@ -95,27 +95,41 @@ class _TabsState extends State<Tabs> {
             });
           },
           fixedColor: const Color.fromRGBO(31, 117, 236, 1),
+          selectedFontSize: ScreenAdapter.size(12),
+          unselectedFontSize: ScreenAdapter.size(12),
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 0
-                    ? '${barIconNamesList[0]}_fill'
-                    : barIconNamesList[0]]),
+                icon: Padding(
+                    padding: EdgeInsets.only(bottom: ScreenAdapter.height(10)),
+                    child: Icon(FlightBookingAPPIconfont.icons[
+                        _currentIndex == 0
+                            ? '${barIconNamesList[0]}_fill'
+                            : barIconNamesList[0]])),
                 label: ("Home")),
             BottomNavigationBarItem(
-                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 1
-                    ? '${barIconNamesList[1]}_fill'
-                    : barIconNamesList[1]]),
+                icon: Padding(
+                    padding: EdgeInsets.only(bottom: ScreenAdapter.height(10)),
+                    child: Icon(FlightBookingAPPIconfont.icons[
+                        _currentIndex == 1
+                            ? '${barIconNamesList[1]}_fill'
+                            : barIconNamesList[1]])),
                 label: ("Explore")),
             BottomNavigationBarItem(
-                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 2
-                    ? '${barIconNamesList[2]}_fill'
-                    : barIconNamesList[2]]),
+                icon: Padding(
+                    padding: EdgeInsets.only(bottom: ScreenAdapter.height(10)),
+                    child: Icon(FlightBookingAPPIconfont.icons[
+                        _currentIndex == 2
+                            ? '${barIconNamesList[2]}_fill'
+                            : barIconNamesList[2]])),
                 label: ("My Ticket")),
             BottomNavigationBarItem(
-                icon: Icon(FlightBookingAPPIconfont.icons[_currentIndex == 3
-                    ? '${barIconNamesList[3]}_fill'
-                    : barIconNamesList[3]]),
+                icon: Padding(
+                    padding: EdgeInsets.only(bottom: ScreenAdapter.height(10)),
+                    child: Icon(FlightBookingAPPIconfont.icons[
+                        _currentIndex == 3
+                            ? '${barIconNamesList[3]}_fill'
+                            : barIconNamesList[3]])),
                 label: ("My Profile")),
           ]),
     );
